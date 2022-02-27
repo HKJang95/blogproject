@@ -22,36 +22,69 @@
             font-size: 3.5rem;
           }
         }
+
+        .nav-pills > .nav-item > .active {
+          color : white;
+          background-color : black;
+        }
+      
       </style>
 
     <link href="../assets/bootstrapcss/style.css" rel="stylesheet">
 
 </head>
-<body class="bg-dark">
+<body>
     <header class="container">
-        <div class="d-flex flex-fill justify-content-center py-3 mb-4 border-bottom p-3 bg-dark text-white">
-          <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
-            <span class="fs-4" style=" margin-left:15px;">HKJang's Blog</span>
+        <div class="d-flex flex-fill py-3 mb-4 border-bottom p-3">
+          <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-decoration-none text-body">
+            <span class="fs-4 ms-3">HKJang's Blog</span>
           </a>
     
-          <ul class="nav nav-pills">
-            <li class="nav-item"><a href="#" class="nav-link text-light" aria-current="page">Home</a></li>
-            <li class="nav-item"><a href="#" class="nav-link active">Features</a></li>
-            <li class="nav-item"><a href="#" class="nav-link text-light">Pricing</a></li>
-            <li class="nav-item"><a href="#" class="nav-link text-light">FAQs</a></li>
-            <li class="nav-item"><a href="#" class="nav-link text-light">About</a></li>
+          <ul class="nav nav-pills pill-black">
+            <li class="nav-item"><a href="#" class="nav-link active" aria-current="page">About Me</a></li>
+            <li class="nav-item"><a href="#" class="nav-link text-body">Projects</a></li>
+            <li class="nav-time"><a href="index_admin" class="nav-link text-body">Modify Index</a></li>
           </ul>
 
           <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-2">
             <input type="search" class="form-control form-control-dark" placeholder="Search..." aria-label="Search">
           </form>
           <form>
-            <button class="btn btn-warning my-2 my-sm-0" type="submit">Search</button>
+            <button class="btn btn-dark my-2 my-sm-0" type="submit">Search</button>
           </form>
         </div>
-        
     </header>
+  <main class="container">
+    <hr class="featurette-divider">
+    <div class="row featurette">
+      <div class="col-md-7">
+        <h2 class="featurette-heading">Test text block 1</h2>
+        <p class="lead">Test text block 2</p>
+      </div>
+      <div class="col-md-5">
+        <img src="https://i.insider.com/602ee9ced3ad27001837f2ac" class="image-fluid" width="100%" height="100%">
 
+      </div>
+    </div>
+    <hr class="featurette-divider">
+
+    <div class="row featurette">
+      <div class="col-md-7 order-md-2">
+        <h2 class="featurette-heading">Test text block 2 </h2>
+        <p class="lead">Test text block 2</p>
+      </div>
+      <div class="col-md-5 order-md-1">
+        <img src="https://i.insider.com/602ee9ced3ad27001837f2ac" class="image-fluid" width="100%" height="100%">
+
+      </div>
+    </div>
     
+
+  </main>
+  <footer class="container">
+
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </body>
 </html>
