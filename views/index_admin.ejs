@@ -85,8 +85,8 @@
 
     <div class="row d-flex col-md-12 justify-content-center">
         <div class="mb-3 col-md-8">
-            <label for="exampleFormControlTextarea1" class="form-label">내용</label>
-            <textarea class="form-control" id="exampleFormControlTextarea1" rows="20"></textarea>
+            <label for="contentForm" class="form-label">내용</label>
+            <textarea class="form-control" id="aboutmeContent" rows="20"></textarea>
         </div>
     </div>
     <div class="row d-flex col-md-12 justify-content-center">
@@ -102,6 +102,28 @@
 
   </footer>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
+    
+  </script>
+<script>
+function getValue(){
+  var sel = document.getElementById("aboutmeOrder").value
+  fetch(`http://localhost:3000/api/aboutme/${sel}`)
+  .then((response)=>response.json())
+  .then(function(data){
+    if(Object.keys(data).length > 0){
+      document.getElementById("aboutmeTitle").value = data[0].title;
+      document.getElementById("aboutmeContent").value = data[0].content;
+    } else {
+      document.getElementById("aboutmeTitle").value = '';
+      document.getElementById("aboutmeContent").value = '';
+    }
+  }
+  );
+}
+document.getElementById("aboutmeOrder").addEventListener("change", getValue);
+
+</script>
+
 </body>
 </html>

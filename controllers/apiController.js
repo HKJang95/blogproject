@@ -1,10 +1,27 @@
 const indexmodel = require('../model/indexpost');
 
-const aboutme = async(req, res) => {
-    result = await indexmodel.aboutmeAll();
-    res.render("aboutmeAPI", result);
+const getAboutme = async(req, res) => {
+    result = {};
+    if(req.params.postId === undefined){
+        result = await indexmodel.aboutmeAll();
+    } else {
+        result = await indexmodel.aboutmeGetPost(req.params.postId);
+    }
+    res.json(result);
 };
 
+const insertAboutme = async(req, res) => {
+    result = {};
+    if(req.params.postId === undefined){
+        result = await indexmodel.aboutmeAll();
+    } else {
+        result = await indexmodel.aboutmeGetPost(req.params.postId);
+    }
+    res.json(result);
+};
+
+
 module.exports = {
-    aboutme
+    getAboutme ,
+    insertAboutme
 };

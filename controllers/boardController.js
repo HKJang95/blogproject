@@ -8,8 +8,7 @@ const indexView = async(req, res) => {
 };
 
 const index_AdminView = async(req, res) => {
-    result = await indexmodel.aboutmeAll();
-    res.render("index_admin", result);
+    res.render("index_admin", {});
 };
 
 module.exports = {

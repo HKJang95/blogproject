@@ -9,6 +9,7 @@
     "express": "^4.17.3",
     "express-async-handler": "^1.2.0",
     "helmet": "^5.0.2",
+    "helmet-csp": "^3.4.0",
     "mysql2": "^2.3.3",
     "nanoid": "^3.3.1",
     "passport": "^0.5.2",

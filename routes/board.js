@@ -1,5 +1,5 @@
 const express = require('express');
-const {indexView, index_AdminView, index_fetch} = require('../controllers/boardController');
+const {indexView, index_AdminView} = require('../controllers/boardController');
 
 const router = express.Router();
 

@@ -1,8 +1,10 @@
 const express = require('express');
-const {aboutme} = require('../controllers/apiController');
+const { getAboutme, insertAboutme } = require('../controllers/apiController');
 
 const router = express.Router();
 
-router.get('/aboutme', aboutme);
+router.get('/aboutme', getAboutme);
+router.get('/aboutme/:postId', getAboutme);
+router.post('/addAboutme/:postId', insertAboutme);
 
 module.exports = router;
