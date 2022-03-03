@@ -52,50 +52,51 @@
         </div>
     </header>
   <main class="container">
-    <div class="row d-flex col-md-12 justify-content-center">
-        <div class="mb-3 col-md-6">
-            <label for="aboutmeTitle" class="form-label">제목</label>
-            <input type="text" class="form-control" id="aboutmeTitle" placeholder="제목">
-        </div>
-        <div class="col-md-2">
-            <label for="aboutmeOrder" class="form-label">글 순서</label>
-            <select class="form-select" aria-label="Order of Aboutme" id="aboutmeOrder">
-                <option selected>글 순서를 정해주세요..</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-                <option value="8">8</option>
-                <option value="9">9</option>
-                <option value="10">10</option>
-            </select>
-        </div>
-    </div>
-    <div class="row d-flex col-md-12 justify-content-center">
-        <div class="mb-1 col-md-8">
-            <div class="col-md-12">
-                <label for="photoForm" class="form-label">사진 선택</label>
-                <input class="form-control form-control-sm" id="photoForm" type="file">
-            </div>
-        </div>
-    </div>
+    <form action="/api/changeAboutme" method="post" id="changeAboutmeForm">
+      <div class="row d-flex col-md-12 justify-content-center">
+          <div class="mb-3 col-md-6">
+              <label for="postTitle" class="form-label">제목</label>
+              <input type="text" class="form-control" id="postTitle" placeholder="제목" name="postTitle">
+          </div>
+          <div class="col-md-2">
+              <label for="postId" class="form-label">글 순서</label>
+              <select class="form-select" aria-label="Order of Aboutme" id="postId" name="postId">
+                  <option selected>글 순서를 정해주세요..</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                  <option value="8">8</option>
+                  <option value="9">9</option>
+                  <option value="10">10</option>
+              </select>
+          </div>
+      </div>
+      <div class="row d-flex col-md-12 justify-content-center">
+          <div class="mb-1 col-md-8">
+              <div class="col-md-12">
+                  <label for="postPhoto" class="form-label">사진 선택</label>
+                  <input class="form-control form-control-sm" id="postPhoto" type="file" name="postPhoto">
+              </div>
+          </div>
+      </div>
 
-    <div class="row d-flex col-md-12 justify-content-center">
-        <div class="mb-3 col-md-8">
-            <label for="contentForm" class="form-label">내용</label>
-            <textarea class="form-control" id="aboutmeContent" rows="20"></textarea>
-        </div>
-    </div>
-    <div class="row d-flex col-md-12 justify-content-center">
-        <div class="mb-3 col-md-8 justify-content-end">
-            <button type="submit" class="btn btn-dark col-md-2 me-2">등록</button>
-            <button type="submit" class="btn btn-primary col-md-2 me-2">미리보기</button>
-            <button type="submit" class="btn btn-danger col-md-2">삭제</button>
-        </div>
-    </div>
+      <div class="row d-flex col-md-12 justify-content-center">
+          <div class="mb-3 col-md-8">
+              <label for="postContent" class="form-label">내용</label>
+              <textarea class="form-control" id="postContent" rows="20" name="postContent"></textarea>
+          </div>
+      </div>
+      <div class="row d-flex col-md-12 justify-content-center">
+          <div class="mb-3 col-md-8 justify-content-start row form-group">
+            <button type="submit" class="btn btn-dark col-md-2 me-2" value="aboutmeInsert" name="action">등록/업데이트</button>
+            <button type="submit" class="btn btn-danger col-md-2" value="aboutmeDelete" name="action">삭제</button>
+          </div>
+      </div>
+  </form>
     
   </main>
   <footer class="container">
@@ -107,21 +108,21 @@
   </script>
 <script>
 function getValue(){
-  var sel = document.getElementById("aboutmeOrder").value
+  var sel = document.getElementById("postId").value
   fetch(`http://localhost:3000/api/aboutme/${sel}`)
   .then((response)=>response.json())
   .then(function(data){
     if(Object.keys(data).length > 0){
-      document.getElementById("aboutmeTitle").value = data[0].title;
-      document.getElementById("aboutmeContent").value = data[0].content;
-    } else {
-      document.getElementById("aboutmeTitle").value = '';
-      document.getElementById("aboutmeContent").value = '';
+      document.getElementById("changeAboutmeForm").action = data[0].id; // 여기 마저 제대로 작업하기!
+      if(confirm('원 글을 불러오시겠습니까?')){
+        document.getElementById("postTitle").value = data[0].title;
+        document.getElementById("postContent").value = data[0].content;
+      }
     }
   }
   );
 }
-document.getElementById("aboutmeOrder").addEventListener("change", getValue);
+document.getElementById("postId").addEventListener("change", getValue);
 
 </script>
 

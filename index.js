@@ -1,8 +1,18 @@
 const express = require('express');
 const app = express();
+var bodyparser = require('body-parser');
 const helmet = require('helmet');
 const compression = require('compression');
 const csp = require('helmet-csp');
+
+app.use(bodyparser.urlencoded({extended: false})); // bodyparser : post 방식 body parsing용 -> express 기본 탑재
+
+/*
+  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  주의 : 현재 scriptSrc는 unsafe-inline CSP 적용중으로, 
+  머지 전에 반드시 확인하여 hash CSP 적용 후 머지할 것!
+  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+*/
 
 app.use(helmet());
 app.use(
@@ -14,7 +24,6 @@ app.use(
       },
     })
   );
-   
 
 app.use(compression());
 app.set('view engine', 'ejs');
