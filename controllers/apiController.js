@@ -1,4 +1,6 @@
 const indexmodel = require('../model/indexpost');
+const s3 = require('../lib/aws');
+const fs = require('fs');
 // mysql myblog DB aboutme table;
 
 // @ get
@@ -30,7 +32,11 @@ const insertAboutme = async(req, res) => {
     if(postId === undefined){
         console.log('Failed to parse json for : insertAboutme');
     } else {
-        var jsonPost = {id:postId, title:postTitle, content:postContent, image_src:postPhoto}
+        var imgurl = ''
+        if(postPhoto !== '' || postPhoto !== undefined){
+            imgurl = await imageUpload(postPhoto); // 여기 이미지 경로 제대로 받아오기!
+        }
+        var jsonPost = {id:postId, title:postTitle, content:postContent, image_src:imgurl}
         duplicateCheck = await indexmodel.aboutmeGetPost(postId); // select by postId로 중복 check
         if(Object.keys(duplicateCheck).length < 1){
             result = await indexmodel.aboutmeInsert(jsonPost); // 중복 없다면 insert
@@ -82,6 +88,24 @@ const deleteAboutme = async(req, res) => {
     res.redirect('/');
 }
 
+// s3 bucket image upload
+const imageUpload = function(img_path){
+    return new Promise((resolve, reject) => {
+        const fileContent = fs.readFileSync(img_path);
+
+        const params = {
+            Bucket: 'blogprojectbucket',
+            Key:'test.jpg',
+            Body:fileContent
+        };
+
+        s3.upload(params, function(err, data){
+            if(err){ throw err; }
+            console.log(`File upload success. ${data.Location}`);
+            resolve(data.Location); // 데이터 주소는 반환되나, 접근이 안됨. 여기 해결!
+        })
+    }).catch(error => console.log(error));
+}
 
 module.exports = {
     getAboutme ,

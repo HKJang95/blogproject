@@ -4,6 +4,7 @@
     "develop": "node index.js"
   },
   "dependencies": {
+    "aws-sdk": "^2.1086.0",
     "compression": "^1.7.4",
     "ejs": "^3.1.6",
     "express": "^4.17.3",
