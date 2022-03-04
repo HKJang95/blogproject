@@ -1,11 +1,11 @@
 const indexmodel = require('../model/indexpost');
+// mysql myblog DB aboutme table;
 
 // @ get
 // /api/aboutme
 const getAboutme = async(req, res) => {
     var result = {};
-    result = await indexmodel.aboutmeGetPost(req.params.postId);
-    // id로 특정 aboutme dataset 찾음
+    result = await indexmodel.aboutmeAll(); // 전체 aboutme table data 소환
     res.json(result);
 };
 
@@ -14,10 +14,9 @@ const getAboutme = async(req, res) => {
 const getAboutmeById = async(req, res) => {
     var result = {};
     if(req.params.postId === undefined) {
-        result = {id:'', title:'', content:'', image_src:''};
+        result = {id:'', title:'', content:'', image_src:''}; // postId가 넘어오지 않았다면 빈 객체 반환
     } else {
-        result = await indexmodel.aboutmeGetPost(req.params.postId);
-        // id로 특정 aboutme dataset 찾음
+        result = await indexmodel.aboutmeGetPost(req.params.postId); // id로 특정 aboutme dataset 찾음
     }
     res.json(result);
 }
@@ -32,9 +31,9 @@ const insertAboutme = async(req, res) => {
         console.log('Failed to parse json for : insertAboutme');
     } else {
         var jsonPost = {id:postId, title:postTitle, content:postContent, image_src:postPhoto}
-        duplicateCheck = await indexmodel.aboutmeGetPost(postId);
+        duplicateCheck = await indexmodel.aboutmeGetPost(postId); // select by postId로 중복 check
         if(Object.keys(duplicateCheck).length < 1){
-            result = await indexmodel.aboutmeInsert(jsonPost);
+            result = await indexmodel.aboutmeInsert(jsonPost); // 중복 없다면 insert
         } else {
             console.log('DB insert fail due to duplicate : insertAboutme');
         }
@@ -43,7 +42,7 @@ const insertAboutme = async(req, res) => {
 };
 
 // @post
-// /api/changeAboutme/:postId
+// /api/updateAboutme/:postId
 const updateAboutme = async(req, res) => {
     var { postId, postTitle, postContent, postPhoto } = req.body;
     var duplicateCheck = {}
@@ -52,9 +51,9 @@ const updateAboutme = async(req, res) => {
         console.log('Failed to parse json for : updateAboutme');
     } else {
         var jsonPost = {id:postId, title:postTitle, content:postContent, image_src:postPhoto}
-        duplicateCheck = await indexmodel.aboutmeGetPost(postId);
+        duplicateCheck = await indexmodel.aboutmeGetPost(postId); // select by postId로 중복 check
         if(Object.keys(duplicateCheck).length >= 1){
-            result = await indexmodel.aboutmeUpdate(jsonPost);
+            result = await indexmodel.aboutmeUpdate(jsonPost); // 기존 data 있으면 update
         } else {
             console.log('DB Update fail due to updating non-existing data : updateAboutme');
         }
@@ -62,10 +61,32 @@ const updateAboutme = async(req, res) => {
     res.redirect('/');
 };
 
+// @Post
+// /api/deleteAboutme/:postId
+const deleteAboutme = async(req, res) => {
+    var { postId } = req.body;
+    var duplicateCheck = {}
+    var result = {}
+    if(postId === undefined){
+        console.log('Failed to parse json for : deleteAboutme');
+    } else {
+        duplicateCheck = await indexmodel.aboutmeGetPost(postId); // select by postId로 중복 check
+        if(Object.keys(duplicateCheck).length >= 1){
+            result = await indexmodel.aboutmeDelete(postId); // 기존 data 있으면 delete
+            
+            console.log(postId);
+        } else {
+            console.log('DB delete fail due to deleting non-existing data : deleteAboutme');
+        }
+    }
+    res.redirect('/');
+}
+
 
 module.exports = {
     getAboutme ,
     getAboutmeById,
     insertAboutme,
-    updateAboutme
+    updateAboutme,
+    deleteAboutme
 };
