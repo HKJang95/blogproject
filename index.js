@@ -21,6 +21,7 @@ app.use(
         defaultSrc: ["'self'"],
         styleSrc: ["'self' 'sha256-uts7zrnGYAKZNfvBc7PYcShvKP4t10vo5qemd5Yp0lc=' https://cdn.jsdelivr.net/"],
         scriptSrc: ["'self' 'unsafe-inline' https://cdn.jsdelivr.net/"],
+        imgSrc: ["'self' https://blogprojectbucket.s3.amazonaws.com/"]
       },
     })
   );

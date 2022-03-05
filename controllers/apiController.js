@@ -91,12 +91,14 @@ const deleteAboutme = async(req, res) => {
 // s3 bucket image upload
 const imageUpload = function(img_path){
     return new Promise((resolve, reject) => {
+        img_path = 'C:/Users/장한결/Documents/카카오톡 받은 파일/KakaoTalk_20211227_173826420.jpg'
         const fileContent = fs.readFileSync(img_path);
 
         const params = {
             Bucket: 'blogprojectbucket',
-            Key:'test.jpg',
-            Body:fileContent
+            Key:'test2.jpg',
+            Body:fileContent,
+            ContentType:'image/jpeg'
         };
 
         s3.upload(params, function(err, data){
