@@ -91,7 +91,6 @@ const deleteAboutme = async(req, res) => {
 // s3 bucket image upload
 const imageUpload = function(img_path){
     return new Promise((resolve, reject) => {
-        img_path = 'C:/Users/장한결/Documents/카카오톡 받은 파일/KakaoTalk_20211227_173826420.jpg'
         const fileContent = fs.readFileSync(img_path);
 
         const params = {
@@ -104,7 +103,7 @@ const imageUpload = function(img_path){
         s3.upload(params, function(err, data){
             if(err){ throw err; }
             console.log(`File upload success. ${data.Location}`);
-            resolve(data.Location); // 데이터 주소는 반환되나, 접근이 안됨. 여기 해결!
+            resolve(data.Location);
         })
     }).catch(error => console.log(error));
 }

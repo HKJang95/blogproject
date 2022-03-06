@@ -7,6 +7,7 @@ const csp = require('helmet-csp');
 
 app.use(bodyparser.urlencoded({extended: false})); // bodyparser : post 방식 body parsing용 -> express 기본 탑재
 
+
 /*
   !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   주의 : 현재 scriptSrc는 unsafe-inline CSP 적용중으로, 
