@@ -5,7 +5,9 @@ const helmet = require('helmet');
 const compression = require('compression');
 const csp = require('helmet-csp');
 
-app.use(bodyparser.urlencoded({extended: false})); // bodyparser : post 방식 body parsing용 -> express 기본 탑재
+app.use(bodyparser.json());
+app.use(bodyparser.urlencoded({extended: true})); // bodyparser : post 방식 body parsing용 -> express 기본 탑재
+app.use(express.json());
 
 
 /*
