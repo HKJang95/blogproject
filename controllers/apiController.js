@@ -1,7 +1,7 @@
 const indexmodel = require('../model/indexpost');
 const s3 = require('../lib/aws');
 const fs = require('fs');
-// mysql myblog DB aboutme table;
+const urlparser = require('url');
 
 // @ get
 // /api/aboutme
@@ -32,9 +32,8 @@ const insertAboutme = async(req, res) => {
     if(postId === undefined){
         console.log('Failed to parse json for : insertAboutme');
     } else {
-        var imgurl = ''
-        if(postPhoto !== '' || postPhoto !== undefined){
-            imgurl = await imageUpload(postPhoto); // 여기 이미지 경로 제대로 받아오기!
+        if(req.file !== undefined) {
+            var imgurl = req.file.location; // router에서 붙인 multer가 반환한 url (aws s3 object url)
         }
         var jsonPost = {id:postId, title:postTitle, content:postContent, image_src:imgurl}
         duplicateCheck = await indexmodel.aboutmeGetPost(postId); // select by postId로 중복 check
@@ -78,9 +77,9 @@ const deleteAboutme = async(req, res) => {
     } else {
         duplicateCheck = await indexmodel.aboutmeGetPost(postId); // select by postId로 중복 check
         if(Object.keys(duplicateCheck).length >= 1){
+            await deleteImageFromS3(duplicateCheck[0].image_src); // image_src의 url에 해당하는 s3 object 삭제
             result = await indexmodel.aboutmeDelete(postId); // 기존 data 있으면 delete
-            
-            console.log(postId);
+            console.log('delete ' + postId + ' complete!');
         } else {
             console.log('DB delete fail due to deleting non-existing data : deleteAboutme');
         }
@@ -88,24 +87,25 @@ const deleteAboutme = async(req, res) => {
     res.redirect('/');
 }
 
-// s3 bucket image upload
-const imageUpload = function(img_path){
-    return new Promise((resolve, reject) => {
-        const fileContent = fs.readFileSync(img_path);
+// AWS S3의 이미지 삭제
+// Export 절대 금지
+const deleteImageFromS3 = async(imgUrl) => { 
+    if(imgUrl === null || imgUrl === undefined){ }
+    else {
+        var urlObj = urlparser.parse(imgUrl, true); 
+        var targetObject = urlObj.path; // image url에서 object해당 부분만 파싱
+        targetObject = targetObject.replace('/', ''); // '/' 문자 지움
+        var params = {Bucket: 'blogprojectbucket', Key: targetObject};
 
-        const params = {
-            Bucket: 'blogprojectbucket',
-            Key:'test2.jpg',
-            Body:fileContent,
-            ContentType:'image/jpeg'
-        };
-
-        s3.upload(params, function(err, data){
-            if(err){ throw err; }
-            console.log(`File upload success. ${data.Location}`);
-            resolve(data.Location);
+        s3.deleteObject(params, function(err, data){ // s3 bucket 접근, object 삭제
+            if (err) {
+                throw err;
+            }
+            else { 
+                console.log('object '+targetObject+' delete complete.');
+            }
         })
-    }).catch(error => console.log(error));
+    }
 }
 
 module.exports = {
