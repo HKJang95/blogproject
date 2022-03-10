@@ -23,7 +23,7 @@ app.use(
       directives: {
         defaultSrc: ["'self'"],
         styleSrc: ["'self' 'sha256-uts7zrnGYAKZNfvBc7PYcShvKP4t10vo5qemd5Yp0lc=' https://cdn.jsdelivr.net/"],
-        scriptSrc: ["'self' 'unsafe-inline' https://cdn.jsdelivr.net/"],
+        scriptSrc: ["'self' 'unsafe-inline' https://cdn.jsdelivr.net/ https://cdn.tiny.cloud/1/vy3lklpfrj9a8l0jkefxe602pse728rb6ku0bqjf3i2cmqak/tinymce/5/tinymce.min.js"],
         imgSrc: ["'self' https://blogprojectbucket.s3.amazonaws.com/ https://blogprojectbucket.s3.ap-northeast-2.amazonaws.com"]
       },
     })
@@ -35,6 +35,7 @@ app.set('view engine', 'ejs');
 //Routes
 app.use('/', require('./routes/board'));
 app.use('/api', require('./routes/api'));
+app.use('/project', require('./routes/project'))
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, console.log("Server start  at port : "+PORT));

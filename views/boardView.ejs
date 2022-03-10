@@ -29,8 +29,6 @@
       
       </style>
 
-    
-
 </head>
 <body>
     <header class="container">
@@ -40,9 +38,9 @@
           </a>
     
           <ul class="nav nav-pills">
-            <li class="nav-item"><a href="/" class="nav-link active" aria-current="page">About Me</a></li>
-            <li class="nav-item"><a href="project" class="nav-link text-body">Projects</a></li>
-            <li class="nav-time"><a href="index_admin" class="nav-link text-body">Modify Index</a></li>
+            <li class="nav-item"><a href="/" class="nav-link text-body" >About Me</a></li>
+            <li class="nav-item"><a href="project/write" class="nav-link active">Projects</a></li>
+            <li class="nav-item"><a href="index_admin" class="nav-link text-body" aria-current="page">Modify Index</a></li>
           </ul>
 
           <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-2">
@@ -54,39 +52,16 @@
         </div>
     </header>
   <main class="container">
-    <%for(var i=0;i<Object.keys(post).length-1;i++) {
-      if(i % 2 == 0){
-      %><div class="row featurette">
-      <div class="col-md-7">
-        <h2 class="featurette-heading"><%=post[i].title%></h2>
-        <p class="lead"><%=post[i].content%></p>
-      </div>
-      <div class="col-md-5">
-        <img src="<%=post[i].image_src%>" crossorigin="anonymous" class="img-fluid" width="100%" height="100%">
-      </div>
-    </div>
-    <hr class="featurette-divider">
-    <%}
-    else{
-      %><div class="row featurette">
-      <div class="col-md-7 order-md-2">
-        <h2 class="featurette-heading"><%=post[i].title%> </h2>
-        <p class="lead"><%=post[i].content%></p>
-      </div>
-      <div class="col-md-5 order-md-1">
-        <img src="<%=post[i].image_src%>" crossorigin="anonymous" class="img-fluid" width="100%" height="100%">
-      </div>
-    </div>
-    <hr class="featurette-divider">
-    <%
-    }
-  }%>
-
+    
   </main>
   <footer class="container">
 
   </footer>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
+  </script>
+  <script>
+    
+  </script>
 </body>
 </html>
