@@ -6,10 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Blog</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-
-    
-      
-
     <style>
         .bd-placeholder-img {
           font-size: 1.125rem;
@@ -31,12 +27,7 @@
         }
       
       </style>
-      <script src="https://cdn.tiny.cloud/1/vy3lklpfrj9a8l0jkefxe602pse728rb6ku0bqjf3i2cmqak/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
-      <script>
-          tinymce.init({
-            selector: '#mytextarea'
-          });
-      </script>
+      
 </head>
 <body>
     <header class="container">
@@ -61,8 +52,15 @@
     </header>
   <main class="container">
     <form method="post">
-        <textarea id="mytextarea">Hello, World!</textarea>
-      </form>
+      <div class="row mb-3 d-flex flex-fill justify-content-center">
+      <div class="col col-md-10 mb-3">
+        <input type="text" class="form-control" id="postTitle" placeholder="제목" name="postTitle">
+      </div>
+      <div class="col col-md-10">
+        <textarea id="tinymceContent"></textarea>
+      </div>
+      </div>
+    </form>
   </main>
   <footer class="container">
 
@@ -70,7 +68,9 @@
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
   </script>
-  <script>
-  </script>
+  
+  
 </body>
+  <script type="application/javascript" src= "/tinymce/tinymce.min.js"></script>
+  <script src= "/js/tinymce.js"></script>
 </html>

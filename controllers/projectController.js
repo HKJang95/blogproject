@@ -1,5 +1,3 @@
-const indexmodel = require('../model/indexpost');
-
 const boardView = async(req, res) => {
     res.render("boardView", {});
 };
