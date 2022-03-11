@@ -55,8 +55,13 @@ const updateAboutme = async(req, res) => {
     if(postId === undefined){
         console.log('Failed to parse json for : updateAboutme');
     } else {
-        var jsonPost = {id:postId, title:postTitle, content:postContent, image_src:postPhoto}
         duplicateCheck = await indexmodel.aboutmeGetPost(postId); // select by postId로 중복 check
+        var imgurl = duplicateCheck[0].image_src;
+        if(req.file !== undefined){ // 새로운 파일이 업로드 된 경우
+            await deleteImageFromS3(imgurl); // 기존 image delete
+            var imgurl = req.file.location; // 새로운 이미지 업로드 결과
+        }
+        var jsonPost = {id:postId, title:postTitle, content:postContent, image_src:imgurl}
         if(Object.keys(duplicateCheck).length >= 1){
             result = await indexmodel.aboutmeUpdate(jsonPost); // 기존 data 있으면 update
         } else {

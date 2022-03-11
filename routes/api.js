@@ -7,7 +7,7 @@ const router = express.Router();
 router.get('/aboutme', getAboutme);
 router.get('/aboutme/:postId', getAboutmeById);
 router.post('/insertAboutme', upload.single('postPhoto'), insertAboutme);
-router.post('/updateAboutme/:postId',upload.single(), updateAboutme);
+router.post('/updateAboutme/:postId',upload.single('postPhoto'), updateAboutme);
 router.post('/deleteAboutme/:postId',upload.single(), deleteAboutme);
 
 module.exports = router;
