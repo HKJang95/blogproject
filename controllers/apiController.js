@@ -1,8 +1,10 @@
 const indexmodel = require('../model/indexpost');
+const projectmodel = require('../model/projectpost');
 const s3 = require('../lib/aws');
 const fs = require('fs');
 const urlparser = require('url');
 
+////////////////////////////// aboutme API ////////////////////////////////////////////////////////////
 // @ get
 // /api/aboutme
 const getAboutme = async(req, res) => {
@@ -91,9 +93,35 @@ const deleteAboutme = async(req, res) => {
     }
     res.redirect('/');
 }
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+////////////////////////////////// (project) post API /////////////////////////////////////////////////////////
+// @post
+// /api/insertPost
+const insertPost = async(req, res) => {
+    console.log(req.body);
+
+    // var { postId, postTitle, postContent, author } = req.body;
+    // var duplicateCheck = {}
+    // var result = {}
+    // if(postId === undefined){
+    //     console.log('Failed to parse json for : insertPost');
+    // } else {
+    //     var jsonPost = {id:postId, title:postTitle, content:postContent, author:author}
+    //     duplicateCheck = await indexmodel.projectGetPostById(postId); // select by postId로 중복 check
+    //     if(Object.keys(duplicateCheck).length < 1){
+    //         result = await indexmodel.projectInsert(jsonPost); // 중복 없다면 insert
+    //     } else {
+    //         console.log('DB insert fail due to duplicate : insertAboutme');
+    //     }
+    // }
+    // res.redirect('/');
+};
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//////////////////////////////// inner function /////////////////////////////////////////////////////////
+//////////////////////////// !!!!!!!! DO NOT EXPORT !!!!!!!!!!! /////////////////////////////////////////
 // AWS S3의 이미지 삭제
-// Export 절대 금지
 const deleteImageFromS3 = async(imgUrl) => { 
     if(imgUrl === null || imgUrl === undefined){ }
     else {
@@ -112,11 +140,27 @@ const deleteImageFromS3 = async(imgUrl) => {
         })
     }
 }
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+///////////////////////////// etc /////////////////////////////////////////////////////////////////////////
+// @post
+// /api/insertImage
+const insertImage = async(req, res) => {
+    
+    imgurl = '';
+    if(req.file !== undefined) {
+        var imgurl = req.file.location; // router에서 붙인 multer가 반환한 url (aws s3 object url)
+    }
+    res.json(imgurl);
+}
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 module.exports = {
     getAboutme ,
     getAboutmeById,
     insertAboutme,
     updateAboutme,
-    deleteAboutme
+    deleteAboutme,
+    insertImage,
+    insertPost
 };

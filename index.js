@@ -33,10 +33,10 @@ app.use(
       directives: {
         defaultSrc: ["'self'"],
         styleSrc: ["'self' https://cdn.jsdelivr.net/ 'unsafe-inline'"],
-        scriptSrc: ["'self' 'unsafe-inline' https://cdn.jsdelivr.net/"],
+        scriptSrc: ["'self' 'unsafe-inline' https://cdn.jsdelivr.net/ https://code.jquery.com"],
         connectSrc: ["'self' blob:"],
         imgSrc: ["'self' blob: https://blogprojectbucket.s3.amazonaws.com/ https://blogprojectbucket.s3.ap-northeast-2.amazonaws.com"],
-        fontSrc: ["'self'"]
+        fontSrc: ["'self' https://cdn.jsdelivr.net"]
       },
     })
   );
