@@ -15,7 +15,7 @@ let Post = function(post){
 Post.projectAll = function(){
     // async 처리위해 Promise 사용
     return new Promise((resolve, reject) => {
-        db.query("SELECT * FROM projectPost", function(err, result, fields){
+        db.query("SELECT * FROM projectPost ORDER BY postdate DESC", function(err, result, fields){
             if (err) throw err;
             else {
                 resolve(result);
@@ -28,7 +28,7 @@ Post.projectAll = function(){
 Post.projectGetPostById = function(postId){
     // async 처리위해 Promise 사용
     return new Promise((resolve, reject) => {
-        db.query("SELECT * FROM projectPost WHERE id=?",[postId], function(err, result, fields){
+        db.query("SELECT * FROM projectPost WHERE id=? ORDER BY postdate DESC",[postId], function(err, result, fields){
             if (err) throw err;
             else {
                 resolve(result);
@@ -41,7 +41,7 @@ Post.projectGetPostById = function(postId){
 Post.projectGetPostByAuthor = function(author){
     // async 처리위해 Promise 사용
     return new Promise((resolve, reject) => {
-        db.query("SELECT * FROM projectPost WHERE author LIKE %?%",[author], function(err, result, fields){
+        db.query("SELECT * FROM projectPost WHERE author LIKE %?% ORDER BY postdate DESC",[author], function(err, result, fields){
             if (err) throw err;
             else {
                 resolve(result);
@@ -54,7 +54,7 @@ Post.projectGetPostByAuthor = function(author){
 Post.projectGetPostByTitle = function(title){
     // async 처리위해 Promise 사용
     return new Promise((resolve, reject) => {
-        db.query("SELECT * FROM projectPost WHERE title LIKE %?%",[title], function(err, result, fields){
+        db.query("SELECT * FROM projectPost WHERE title LIKE %?% ORDER BY postdate DESC",[title], function(err, result, fields){
             if (err) throw err;
             else {
                 resolve(result);
@@ -67,7 +67,7 @@ Post.projectGetPostByTitle = function(title){
 Post.projectGetPostByContent = function(content){
     // async 처리위해 Promise 사용
     return new Promise((resolve, reject) => {
-        db.query("SELECT * FROM projectPost WHERE content LIKE %?%",[content], function(err, result, fields){
+        db.query("SELECT * FROM projectPost WHERE content LIKE %?% ORDER BY postdate DESC",[content], function(err, result, fields){
             if (err) throw err;
             else {
                 resolve(result);
@@ -80,7 +80,7 @@ Post.projectGetPostByContent = function(content){
 Post.projectInsert = function(post){
     // async 처리위해 Promise 사용
     return new Promise((resolve, reject) => {
-        db.query("INSERT INTO project (id, title, content, author) VALUES(?,?,?,?)",[post.id, post.title, post.content, post.author], function(err, result, fields){
+        db.query("INSERT INTO projectPost (id, title, content, author, postdate) VALUES(?,?,?,?,now())",[post.id, post.title, post.content, post.author], function(err, result, fields){
             if (err) throw err;
             else {
                 console.log(result.insertId);
@@ -93,7 +93,7 @@ Post.projectInsert = function(post){
 // project 설명페이지 데이터 삭제
 Post.projectDelete = function(id){
     return new Promise((resolve, reject) => {
-        db.query("DELETE FROM project WHERE id=?",[id], function(err, result, fields){
+        db.query("DELETE FROM projectPost WHERE id=?",[id], function(err, result, fields){
             if (err) throw err;
             else {
                 console.log(result);
@@ -106,7 +106,7 @@ Post.projectDelete = function(id){
 // project 설명페이지 데이터 update
 Post.projectUpdate = function(post){
     return new Promise((resolve, reject) => {
-        db.query("UPDATE project SET id=?, title=?,content=?,author=? WHERE id=?",[post.id, post.title, post.content, post.author, post.id], function(err, result, fields){
+        db.query("UPDATE projectPost SET id=?, title=?,content=?,author=? WHERE id=?",[post.id, post.title, post.content, post.author, post.id], function(err, result, fields){
             if (err) throw err;
             else {
                 console.log(result);

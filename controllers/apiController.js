@@ -1,8 +1,8 @@
 const indexmodel = require('../model/indexpost');
 const projectmodel = require('../model/projectpost');
 const s3 = require('../lib/aws');
-const fs = require('fs');
 const urlparser = require('url');
+const nanoid = require('nanoid');
 
 ////////////////////////////// aboutme API ////////////////////////////////////////////////////////////
 // @ get
@@ -99,23 +99,25 @@ const deleteAboutme = async(req, res) => {
 // @post
 // /api/insertPost
 const insertPost = async(req, res) => {
-    console.log(req.body);
-
-    // var { postId, postTitle, postContent, author } = req.body;
-    // var duplicateCheck = {}
-    // var result = {}
-    // if(postId === undefined){
-    //     console.log('Failed to parse json for : insertPost');
-    // } else {
-    //     var jsonPost = {id:postId, title:postTitle, content:postContent, author:author}
-    //     duplicateCheck = await indexmodel.projectGetPostById(postId); // select by postId로 중복 check
-    //     if(Object.keys(duplicateCheck).length < 1){
-    //         result = await indexmodel.projectInsert(jsonPost); // 중복 없다면 insert
-    //     } else {
-    //         console.log('DB insert fail due to duplicate : insertAboutme');
-    //     }
-    // }
-    // res.redirect('/');
+    
+    var postTitle = req.body.postTitle;
+    var postContent = req.body.editordata;
+    var postId = nanoid.nanoid();
+    var author = ''
+    var duplicateCheck = {}
+    var result = {}
+    if(postId === undefined){
+        console.log('Failed to parse json for : insertPost');
+    } else {
+        var jsonPost = {id:postId, title:postTitle, content:postContent, author:author}
+        duplicateCheck = await projectmodel.projectGetPostById(postId); // select by postId로 중복 check
+        if(Object.keys(duplicateCheck).length < 1){
+            result = await projectmodel.projectInsert(jsonPost); // 중복 없다면 insert
+        } else {
+            console.log('DB insert fail due to duplicate : insertPost');
+        }
+    }
+    res.redirect('/');
 };
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 

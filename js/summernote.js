@@ -17,7 +17,6 @@ $(function(){
 function sendFile(file, editor){
   data = new FormData()
   data.append("img", file)
-
   $.ajax({
     data: data,
     type: "POST",
@@ -27,7 +26,6 @@ function sendFile(file, editor){
     enctype: "multipart/form-data",
     processData: false,
     success: function (response) {
-      // console.log(response);
       var imgurl = $('<img>').attr({
         'src': response,
         'crossorigin': 'anonymous',
@@ -35,7 +33,6 @@ function sendFile(file, editor){
         'width': '100%',
         'height': '100%'
     });
-      console.log(imgurl[0]);
       $("#summernote").summernote("insertNode", imgurl[0]);
     },
   })
