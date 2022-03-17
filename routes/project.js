@@ -4,7 +4,7 @@ const {boardView, postView, postWriteView} = require('../controllers/projectCont
 const router = express.Router();
 
 router.get('/', boardView);
-router.get('/post/:postId', postView);
 router.get('/write', postWriteView);
+router.get('/:postId', postView);
 
 module.exports = router;

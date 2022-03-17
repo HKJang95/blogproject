@@ -3,6 +3,7 @@ const projectmodel = require('../model/projectpost');
 const s3 = require('../lib/aws');
 const urlparser = require('url');
 const nanoid = require('nanoid');
+const parser = require('node-html-parser');
 
 ////////////////////////////// aboutme API ////////////////////////////////////////////////////////////
 // @ get
@@ -106,10 +107,18 @@ const insertPost = async(req, res) => {
     var author = ''
     var duplicateCheck = {}
     var result = {}
+    var thumbnail = ''
     if(postId === undefined){
         console.log('Failed to parse json for : insertPost');
     } else {
-        var jsonPost = {id:postId, title:postTitle, content:postContent, author:author}
+        
+        const root = parser.parse(postContent);
+        const attrs = root.getElementsByTagName('img')
+        if(attrs.length >= 1){
+            var jsonPost = {id:postId, title:postTitle, content:postContent, author:author, thumbnail:attrs[0].attributes['src']} // 이미지가 한 개 이상 삽입되어 있으면 썸네일로 첫번째 이미지 활용
+        } else {
+            var jsonPost = {id:postId, title:postTitle, content:postContent, author:author} // 없으면 default img
+        }
         duplicateCheck = await projectmodel.projectGetPostById(postId); // select by postId로 중복 check
         if(Object.keys(duplicateCheck).length < 1){
             result = await projectmodel.projectInsert(jsonPost); // 중복 없다면 insert
@@ -148,7 +157,6 @@ const deleteImageFromS3 = async(imgUrl) => {
 // @post
 // /api/insertImage
 const insertImage = async(req, res) => {
-    
     imgurl = '';
     if(req.file !== undefined) {
         var imgurl = req.file.location; // router에서 붙인 multer가 반환한 url (aws s3 object url)

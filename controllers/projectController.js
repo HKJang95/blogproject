@@ -1,9 +1,15 @@
+const projectmodel = require('../model/projectpost');
+
+
 const boardView = async(req, res) => {
-    res.render("boardView", {});
+    post = await projectmodel.projectAll();
+    res.render("boardView", post);
 };
 
 const postView = async(req, res) => {
-    res.render("postView", {});
+    postId = req.params.postId;
+    post = await projectmodel.projectGetPostById(postId);
+    res.render("postView", post);
 };
 
 const postWriteView = (req, res) => {

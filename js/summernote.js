@@ -30,8 +30,6 @@ function sendFile(file, editor){
         'src': response,
         'crossorigin': 'anonymous',
         'class': 'img-fluid',
-        'width': '100%',
-        'height': '100%'
     });
       $("#summernote").summernote("insertNode", imgurl[0]);
     },
