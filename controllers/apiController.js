@@ -114,8 +114,10 @@ const insertPost = async(req, res) => {
         
         const root = parser.parse(postContent);
         const attrs = root.getElementsByTagName('img')
+        console.log(attrs.length);
         if(attrs.length >= 1){
-            var jsonPost = {id:postId, title:postTitle, content:postContent, author:author, thumbnail:attrs[0].attributes['src']} // 이미지가 한 개 이상 삽입되어 있으면 썸네일로 첫번째 이미지 활용
+            var jsonPost = {id:postId, title:postTitle, content:postContent, author:author, thumbnail:attrs[0].attributes['src']}
+             // 이미지가 한 개 이상 삽입되어 있으면 썸네일로 첫번째 이미지 활용
         } else {
             var jsonPost = {id:postId, title:postTitle, content:postContent, author:author} // 없으면 default img
         }
@@ -126,7 +128,7 @@ const insertPost = async(req, res) => {
             console.log('DB insert fail due to duplicate : insertPost');
         }
     }
-    res.redirect('/');
+    res.redirect(`/project/view/${postId}`);
 };
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 

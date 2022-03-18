@@ -80,7 +80,7 @@ Post.projectGetPostByContent = function(content){
 Post.projectInsert = function(post){
     // async 처리위해 Promise 사용
     return new Promise((resolve, reject) => {
-        db.query("INSERT INTO projectPost (id, title, content, author, postdate) VALUES(?,?,?,?,now())",[post.id, post.title, post.content, post.author], function(err, result, fields){
+        db.query("INSERT INTO projectPost (id, title, content, author, thumbnail, postdate) VALUES(?,?,?,?,?,now())",[post.id, post.title, post.content, post.author, post.thumbnail], function(err, result, fields){
             if (err) throw err;
             else {
                 console.log(result.insertId);

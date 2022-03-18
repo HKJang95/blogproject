@@ -16,8 +16,15 @@ const postWriteView = (req, res) => {
     res.render("postWrite", {});
 }
 
+const postEditView = async(req, res) => {
+    postId = req.params.postId;
+    post = await projectmodel.projectGetPostById(postId);
+    res.render("postEdit", post);
+}
+
 module.exports = {
     boardView,
     postView,
-    postWriteView
+    postWriteView,
+    postEditView
 };
