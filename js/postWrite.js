@@ -7,4 +7,3 @@
   
   // delete / insert 버튼 동작
   document.getElementById("projectInsert").addEventListener("click", submitPost);
-  document.getElementById("projectDelete").addEventListener("click", deletePost);

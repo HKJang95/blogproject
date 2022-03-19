@@ -106,7 +106,11 @@ Post.projectDelete = function(id){
 // project 설명페이지 데이터 update
 Post.projectUpdate = function(post){
     return new Promise((resolve, reject) => {
-        db.query("UPDATE projectPost SET id=?, title=?,content=?,author=? WHERE id=?",[post.id, post.title, post.content, post.author, post.id], function(err, result, fields){
+        var thumbnailURL = post.thumbnail;
+        if(thumbnailURL === null || thumbnailURL === ''){
+            thumbnailURL = `https://blogprojectbucket.s3.ap-northeast-2.amazonaws.com/default.jpg`;
+        }
+        db.query("UPDATE projectPost SET id=?, title=?,content=?,author=?,thumbnail=? WHERE id=?",[post.id, post.title, post.content, post.author,thumbnailURL, post.id], function(err, result, fields){
             if (err) throw err;
             else {
                 console.log(result);

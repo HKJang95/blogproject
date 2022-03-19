@@ -93,7 +93,7 @@ const deleteAboutme = async(req, res) => {
         }
     }
     res.redirect('/');
-}
+};
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 ////////////////////////////////// (project) post API /////////////////////////////////////////////////////////
@@ -111,12 +111,9 @@ const insertPost = async(req, res) => {
     if(postId === undefined){
         console.log('Failed to parse json for : insertPost');
     } else {
-        
-        const root = parser.parse(postContent);
-        const attrs = root.getElementsByTagName('img')
-        console.log(attrs.length);
-        if(attrs.length >= 1){
-            var jsonPost = {id:postId, title:postTitle, content:postContent, author:author, thumbnail:attrs[0].attributes['src']}
+        const thumbnailURL = thumbnailParser(postContent);
+        if(thumbnailURL !== null){
+            var jsonPost = {id:postId, title:postTitle, content:postContent, author:author, thumbnail:thumbnailURL}
              // 이미지가 한 개 이상 삽입되어 있으면 썸네일로 첫번째 이미지 활용
         } else {
             var jsonPost = {id:postId, title:postTitle, content:postContent, author:author} // 없으면 default img
@@ -130,6 +127,50 @@ const insertPost = async(req, res) => {
     }
     res.redirect(`/project/view/${postId}`);
 };
+
+// @post
+// /api/deletePost/:postId
+const deletePost = async(req, res) => {
+    var { postId } = req.body;
+    var duplicateCheck = {}
+    var result = {}
+    if(postId === undefined){
+        console.log('Failed to parse json for : deletePost');
+    } else {
+        duplicateCheck = await projectmodel.aboutmeGetPost(postId); // select by postId로 중복 check
+        if(Object.keys(duplicateCheck).length >= 1){
+            await deleteImageFromS3(duplicateCheck[0].thumbnail); // thumbnail의 url에 해당하는 s3 object 삭제
+            result = await projectmodel.aboutmeDelete(postId); // 기존 data 있으면 delete
+            console.log('delete ' + postId + ' complete!');
+        } else {
+            console.log('DB delete fail due to deleting non-existing data : deletePost');
+        }
+    }
+    res.redirect('/project');
+};
+
+// @post
+// /api/updatePost/:postId
+const updatePost = async(req, res) => {
+    var { postId, postTitle, editordata } = req.body;
+    var duplicateCheck = {}
+    var result = {}
+    if(postId === undefined){
+        console.log('Failed to parse json for : updatePost');
+    } else {
+        duplicateCheck = await projectmodel.projectGetPostById(postId); // select by postId로 중복 check
+        var thumbnailURL = thumbnailParser(editordata);
+        console.log(thumbnailURL);
+        var jsonPost = {id:postId, title:postTitle, content:editordata, thumbnail:thumbnailURL};
+        if(Object.keys(duplicateCheck).length >= 1){
+            result = await projectmodel.projectUpdate(jsonPost); // 기존 data 있으면 update
+        } else {
+            console.log('DB Update fail due to updating non-existing data : updatePost');
+        }
+    }
+    res.redirect(`/project/view/${postId}`);
+};
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //////////////////////////////// inner function /////////////////////////////////////////////////////////
@@ -153,6 +194,17 @@ const deleteImageFromS3 = async(imgUrl) => {
         })
     }
 }
+
+// html content의 첫번째 image 주소 반환
+const thumbnailParser= (rawURL) => { 
+    const root = parser.parse(rawURL);
+    const attrs = root.getElementsByTagName('img')
+    if(attrs.length >= 1){
+        return attrs[0].attributes['src'];
+    } else {
+        return null;
+    }
+}
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 ///////////////////////////// etc /////////////////////////////////////////////////////////////////////////
@@ -174,5 +226,7 @@ module.exports = {
     updateAboutme,
     deleteAboutme,
     insertImage,
-    insertPost
+    insertPost,
+    deletePost,
+    updatePost
 };
