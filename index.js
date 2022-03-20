@@ -15,10 +15,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({extended: true})); // bodyparser : post 방식 body parsing용 -> express 기본 탑재
 app.use(express.json());
-app.use(cookieParser('keyboard cat'));
-app.use(session({secret: 'keyboard cat'}));
-app.use(passport.initialize);
-app.use(passport.session());
+// app.use(cookieParser('keyboard cat'));
+// app.use(session({secret: 'keyboard cat'}));
+// app.use(passport.initialize);
+// app.use(passport.session());
 
 
 var corsOption = {
@@ -58,7 +58,7 @@ app.set('view engine', 'ejs');
 app.use('/', require('./routes/board'));
 app.use('/api', require('./routes/api'));
 app.use('/project', require('./routes/project'))
-app.ise('/admin', require('./routes/admin'));
+app.use('/admin', require('./routes/admin'));
 
 app.use('/js', express.static(path.join(__dirname, 'js')));
 app.use('/tinymce', express.static(path.join(__dirname, 'node_modules', 'tinymce')));
