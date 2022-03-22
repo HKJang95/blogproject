@@ -1,3 +1,5 @@
+// /project
+
 const express = require('express');
 const {boardView, postView, postWriteView, postEditView} = require('../controllers/projectController');
 
@@ -7,5 +9,3 @@ router.get('/', boardView);
 router.get('/write', postWriteView);
 router.get('/edit/:postId', postEditView);
 router.get('/view/:postId', postView);
-
-module.exports = router;

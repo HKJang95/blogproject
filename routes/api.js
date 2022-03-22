@@ -1,3 +1,5 @@
+// /api
+
 const express = require('express');
 const { getAboutme, getAboutmeById, insertAboutme, updateAboutme, deleteAboutme, insertImage, insertPost, deletePost, updatePost } = require('../controllers/apiController');
 const upload = require('../lib/multer');

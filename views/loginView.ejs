@@ -60,24 +60,23 @@
   <main class="container">
     <div class="d-flex justify-content-center col-md-12">
       <div class="col-md-6">
-        <form class="form-signin">
+        <form class="form-signin" action="/admin/loginProcess" id="signinForm" method="post">
           <h1 class="h3 mb-3 font-weight-normal">Admin sign in</h1>
           <label for="inputID" class="sr-only">ID</label>
-          <input type="text" id="inputID" class="form-control" placeholder="ID" required autofocus>
+          <input type="text" name="inputId" id="inputID" class="form-control" placeholder="ID" required autofocus>
           <label for="inputPassword" class="sr-only">Password</label>
-          <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+          <input type="password" name="inputPassword" id="inputPassword" class="form-control" placeholder="Password" required>
           <div class="checkbox mb-3">
             <label>
               <input type="checkbox" value="remember-me"> Remember me
             </label>
           </div>
         </form>
-        <button class="btn btn-lg btn-primary btn-block" type="submit" id="signInBtn">Sign in</button>
+        <button class="btn btn-lg btn-primary btn-block" type="submit" id="signinBtn">Sign in</button>
     </div>
     </div>
   </main>
   <footer class="container">
-
   </footer>
 
 <script src="/js/loginView.js"></script>
