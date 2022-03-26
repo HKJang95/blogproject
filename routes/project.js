@@ -9,3 +9,5 @@ router.get('/', boardView);
 router.get('/write', postWriteView);
 router.get('/edit/:postId', postEditView);
 router.get('/view/:postId', postView);
+
+module.exports = router;

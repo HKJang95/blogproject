@@ -7,14 +7,12 @@ const helmet = require('helmet');
 const compression = require('compression');
 const csp = require('helmet-csp');
 const cors = require('cors');
+const sessionStore = require('./lib/sessionDB.js');
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({extended: true})); // bodyparser : post 방식 body parsing용 -> express 기본 탑재
 app.use(express.json());
-
-
-
 
 var corsOption = {
   origin: ['localhost'],
@@ -44,19 +42,27 @@ app.use(
       },
     })
   );
+
+app.use(session({
+  key: 'nickname',
+  secret: 'mysecret',
+  store: sessionStore,
+  resave: false,
+  saveUninitialized: false
+}));
 const passport = require('./lib/passport')(app);
 
 app.use(compression());
 app.set('view engine', 'ejs');
 
-
 //Routes
 app.use('/', require('./routes/board'));
 app.use('/api', require('./routes/api'));
 app.use('/project', require('./routes/project'))
-app.use('/admin', require('./routes/admin'));
+app.use('/admin', require('./routes/admin')(passport));
 
 app.use('/js', express.static(path.join(__dirname, 'js'))); // static route
+
 
 app.use(function(req, res, next){
   res.status(404).send('Sorry! file not found : 404!');

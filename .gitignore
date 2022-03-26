@@ -2,3 +2,4 @@
 /lib/db.js
 /test/
 /lib/aws.js
+/lib/sessionDB.js
