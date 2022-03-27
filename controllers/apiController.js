@@ -196,7 +196,7 @@ const deleteImageFromS3 = async(imgUrl) => {
 }
 
 // html content의 첫번째 image 주소 반환
-const thumbnailParser= (rawURL) => { 
+const thumbnailParser = (rawURL) => { 
     const root = parser.parse(rawURL);
     const attrs = root.getElementsByTagName('img')
     if(attrs.length >= 1){

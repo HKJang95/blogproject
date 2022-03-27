@@ -1,6 +1,6 @@
 // /admin
 const express = require('express');
-const { loginView } = require('../controllers/adminController');
+const { loginView, logoutProcess } = require('../controllers/adminController');
 
 const router = express.Router();
 
@@ -14,6 +14,8 @@ module.exports = function(passport){ // passport 자체를 객체로 받아야 �
             failureFlash: true
         })
     );
+
+    router.get('/logoutProcess', logoutProcess);
 
     return router;
 };

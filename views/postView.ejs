@@ -40,7 +40,9 @@
         <ul class="nav nav-pills">
           <li class="nav-item"><a href="/" class="nav-link text-body" aria-current="page">About Me</a></li>
           <li class="nav-item"><a href="/project" class="nav-link active">Projects</a></li>
-          <li class="nav-time"><a href="index_admin" class="nav-link text-body">Modify Index</a></li>
+          <%if(adminLogin) {%>
+            <li class="nav-time"><a href="index_admin" class="nav-link text-body">Modify Index</a></li>
+          <%}%>
         </ul>
 
         <form class="col-12 col-lg-auto mb-3 mb-lg-0 mr-lg-2">
