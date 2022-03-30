@@ -45,15 +45,15 @@
     
           <ul class="nav nav-pills">
             <li class="nav-item"><a href="/" class="nav-link text-body" >About Me</a></li>
-            <li class="nav-item"><a href="/project" class="nav-link active">Projects</a></li>
+            <li class="nav-item"><a href="/project" class="nav-link text-body">Projects</a></li>
             <li class="nav-item"><a href="/index_admin" class="nav-link text-body" aria-current="page">Modify Index</a></li>
           </ul>
 
-          <form class="col-12 col-lg-auto mb-3 mb-lg-0 mr-lg-2">
-            <input type="search" class="form-control form-control-dark ml-3" placeholder="Search..." aria-label="Search">
-          </form>
-          <form>
-            <button class="btn btn-dark my-2 my-sm-0" type="submit">Search</button>
+          <form class="col-12 col-lg-auto mb-3 mb-lg-0 mr-lg-2" action="/project" id="searchForm" method="get">
+            <div class="input-group">
+              <input type="search" class="form-control form-control-dark ml-3" placeholder="Search..." aria-label="Search" name="searchInput">
+              <button class="btn btn-dark my-2 my-sm-0" type="submit" id="searchBtn">Search</button>
+            </div>
           </form>
         </div>
     </header>
@@ -69,8 +69,9 @@
           <input type="password" name="inputPassword" id="inputPassword" class="form-control" placeholder="Password" required>
           <div class="checkbox mb-3">
           </div>
+          <button class="btn btn-lg btn-primary btn-block" type="submit" id="signinBtn">로그인</button>
         </form>
-        <button class="btn btn-lg btn-primary btn-block" type="submit" id="signinBtn">로그인</button>
+        
         <%} else {%>
           <a href="/admin/logoutProcess">로그아웃</a>
         <%}%>
@@ -80,6 +81,5 @@
   <footer class="container">
   </footer>
 
-<script src="/js/loginView.js"></script>
 </body>
 </html>

@@ -176,10 +176,10 @@ const deletePost = async(req, res) => {
         if(postId === undefined){
             console.log('Failed to parse json for : deletePost');
         } else {
-            duplicateCheck = await projectmodel.aboutmeGetPost(postId); // select by postId로 중복 check
+            duplicateCheck = await projectmodel.projectGetPostById(postId); // select by postId로 중복 check
             if(Object.keys(duplicateCheck).length >= 1){
                 await deleteImageFromS3(duplicateCheck[0].thumbnail); // thumbnail의 url에 해당하는 s3 object 삭제
-                result = await projectmodel.aboutmeDelete(postId); // 기존 data 있으면 delete
+                result = await projectmodel.projectDelete(postId); // 기존 data 있으면 delete
                 console.log('delete ' + postId + ' complete!');
             } else {
                 console.log('DB delete fail due to deleting non-existing data : deletePost');

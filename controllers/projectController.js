@@ -1,13 +1,17 @@
 const projectmodel = require('../model/projectpost');
 
-
 const boardView = async(req, res) => {
-    post = await projectmodel.projectAll();
+    searchInput = req.query.searchInput;
+    if(searchInput === undefined){
+        post = await projectmodel.projectAll();
+    } else {
+        post = await projectmodel.projectGetPostByTitle(searchInput);
+    }
     adminLogin = false;
     if(req.user === 'admin'){
         adminLogin = true;
     }
-    res.render("boardView", {post, adminLogin});
+    res.render("boardView", {post, adminLogin, searchInput});
 };
 
 const postView = async(req, res) => {

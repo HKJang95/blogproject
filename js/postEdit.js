@@ -14,6 +14,7 @@
     document.getElementById("postProjectForm").submit(); // postId option select시 지정된 form action api 주소로 submit 실행
   }
   
+  
   // delete / insert 버튼 동작
   document.getElementById("projectDelete").addEventListener("click", deletePost);
   document.getElementById("projectEdit").addEventListener("click", editPost);

@@ -45,15 +45,15 @@
     
           <ul class="nav nav-pills">
             <li class="nav-item"><a href="/" class="nav-link text-body" >About Me</a></li>
-            <li class="nav-item"><a href="/project" class="nav-link active">Projects</a></li>
-            <li class="nav-item"><a href="/index_admin" class="nav-link text-body" aria-current="page">Modify Index</a></li>
+            <li class="nav-item"><a href="/project" class="nav-link active" aria-current="page">Projects</a></li>
+            <li class="nav-item"><a href="/index_admin" class="nav-link text-body">Modify Index</a></li>
           </ul>
 
-          <form class="col-12 col-lg-auto mb-3 mb-lg-0 mr-lg-2">
-            <input type="search" class="form-control form-control-dark ml-3" placeholder="Search..." aria-label="Search">
-          </form>
-          <form>
-            <button class="btn btn-dark my-2 my-sm-0" type="submit">Search</button>
+          <form class="col-12 col-lg-auto mb-3 mb-lg-0 mr-lg-2" action="/project" id="searchForm" method="get">
+            <div class="input-group">
+              <input type="search" class="form-control form-control-dark ml-3" placeholder="Search..." aria-label="Search" name="searchInput">
+              <button class="btn btn-dark my-2 my-sm-0" type="submit" id="searchBtn">Search</button>
+            </div>
           </form>
         </div>
     </header>

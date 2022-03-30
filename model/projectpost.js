@@ -41,7 +41,8 @@ Post.projectGetPostById = function(postId){
 Post.projectGetPostByAuthor = function(author){
     // async 처리위해 Promise 사용
     return new Promise((resolve, reject) => {
-        db.query("SELECT * FROM projectPost WHERE author LIKE %?% ORDER BY postdate DESC",[author], function(err, result, fields){
+        author = '%' + author + '%';
+        db.query("SELECT * FROM projectPost WHERE author LIKE ? ORDER BY postdate DESC",[author], function(err, result, fields){
             if (err) throw err;
             else {
                 resolve(result);
@@ -54,7 +55,8 @@ Post.projectGetPostByAuthor = function(author){
 Post.projectGetPostByTitle = function(title){
     // async 처리위해 Promise 사용
     return new Promise((resolve, reject) => {
-        db.query("SELECT * FROM projectPost WHERE title LIKE %?% ORDER BY postdate DESC",[title], function(err, result, fields){
+        title = '%' + title + '%';
+        db.query("SELECT * FROM projectPost WHERE title LIKE ? ORDER BY postdate DESC",[title], function(err, result, fields){
             if (err) throw err;
             else {
                 resolve(result);
@@ -67,7 +69,8 @@ Post.projectGetPostByTitle = function(title){
 Post.projectGetPostByContent = function(content){
     // async 처리위해 Promise 사용
     return new Promise((resolve, reject) => {
-        db.query("SELECT * FROM projectPost WHERE content LIKE %?% ORDER BY postdate DESC",[content], function(err, result, fields){
+        content = '%' + content + '%';
+        db.query("SELECT * FROM projectPost WHERE content LIKE ? ORDER BY postdate DESC",[content], function(err, result, fields){
             if (err) throw err;
             else {
                 resolve(result);
