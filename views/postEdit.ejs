@@ -57,6 +57,7 @@
           </form>
         </div>
     </header>
+  <%if(adminLogin){%>
   <main class="container">
     <form method="post" action="" id="postProjectForm">
       
@@ -77,6 +78,9 @@
       <button type="submit" class="btn btn-danger col-md-2" value="projectDelete" name="action" id="projectDelete">삭제</button>
     </div>
   </main>
+  <%} else {%>
+    <meta http-equiv="refresh" content="0; url=/"></meta>
+  <%}%>
   <footer class="container">
 
   </footer>

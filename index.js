@@ -48,7 +48,8 @@ app.use(session({
   secret: 'mysecret',
   store: sessionStore,
   resave: false,
-  saveUninitialized: false
+  saveUninitialized: false,
+  cookie : {maxAge: 24 * 60 * 60 * 1000} // (1000 * 60 * 60 * 2) ms => 2hrs 
 }));
 const passport = require('./lib/passport')(app);
 
@@ -62,7 +63,6 @@ app.use('/project', require('./routes/project'))
 app.use('/admin', require('./routes/admin')(passport));
 
 app.use('/js', express.static(path.join(__dirname, 'js'))); // static route
-
 
 app.use(function(req, res, next){
   res.status(404).send('Sorry! file not found : 404!');

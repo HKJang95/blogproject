@@ -1,5 +1,9 @@
 const loginView = async(req, res) => {
-    res.render("loginView", {});
+    adminLogin = false;
+    if(req.user === 'admin'){
+        adminLogin = true;
+    }
+    res.render("loginView", {adminLogin});
 };
 
 const logoutProcess = (req, res) => { // logout 프로세스
