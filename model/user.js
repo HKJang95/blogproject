@@ -22,7 +22,7 @@ User.UserAll = function(){
 User.GetUserById = function(UserId){
     // async 처리위해 Promise 사용
     return new Promise((resolve, reject) => {
-        db.query("SELECT * FROM User WHERE id=?",[UserId], function(err, result, fields){
+        db.query("SELECT * FROM user WHERE id=?",[UserId], function(err, result, fields){
             if (err) throw err;
             else {
                 resolve(result);
@@ -33,7 +33,7 @@ User.GetUserById = function(UserId){
 
 User.authenticate = function(userId, userPassword){
     return new Promise((resolve, reject) => {
-        db.query("SELECT * FROM USER WHERE id=? AND password=SHA2(?,256)",[userId, userPassword], function(err, result, fields){
+        db.query("SELECT * FROM user WHERE id=? AND password=SHA2(?,256)",[userId, userPassword], function(err, result, fields){
             if (err) throw err;
             else {
                 resolve(result);
@@ -46,7 +46,7 @@ User.authenticate = function(userId, userPassword){
 User.UserInsert = function(User){
     // async 처리위해 Promise 사용
     return new Promise((resolve, reject) => {
-        db.query("INSERT INTO User (id, password, date) SELECT(?,SHA2(?,256),now())",[User.id, User.password], function(err, result, fields){
+        db.query("INSERT INTO user (id, password, date) SELECT(?,SHA2(?,256),now())",[User.id, User.password], function(err, result, fields){
             if (err) throw err;
             else {
                 console.log(result.insertId);
@@ -59,7 +59,7 @@ User.UserInsert = function(User){
 // index 설명페이지 데이터 삭제
 User.UserDelete = function(id){
     return new Promise((resolve, reject) => {
-        db.query("DELETE FROM User WHERE id=?",[id], function(err, result, fields){
+        db.query("DELETE FROM user WHERE id=?",[id], function(err, result, fields){
             if (err) throw err;
             else {
                 console.log(result);
@@ -72,7 +72,7 @@ User.UserDelete = function(id){
 // index 설명페이지 데이터 update
 User.UserUpdate = function(User){
     return new Promise((resolve, reject) => {
-        db.query("UPDATE User SET id=?, password=SHA2(?,256) WHERE id=?",[User.id, User.password], function(err, result, fields){
+        db.query("UPDATE user SET id=?, password=SHA2(?,256) WHERE id=?",[User.id, User.password], function(err, result, fields){
             if (err) throw err;
             else {
                 console.log(result);
