@@ -1,7 +1,6 @@
 // postId option select시 동작
 function getValue(){
     var sel = document.getElementById("postId").value;
-  
     fetch(`http://localhost:3000/api/aboutme/${sel}`)
     .then((response)=>response.json())
     .then(function(data){
