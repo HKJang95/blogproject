@@ -83,6 +83,10 @@ Post.projectGetPostByContent = function(content){
 Post.projectInsert = function(post){
     // async 처리위해 Promise 사용
     return new Promise((resolve, reject) => {
+        var thumbnailURL = post.thumbnail;
+        if(thumbnailURL === null || thumbnailURL === ''){
+            thumbnailURL = `https://blogprojectbucket.s3.ap-northeast-2.amazonaws.com/default.jpg`;
+        }
         db.query("INSERT INTO projectPost (id, title, content, author, thumbnail, postdate) VALUES(?,?,?,?,?,now())",[post.id, post.title, post.content, post.author, post.thumbnail], function(err, result, fields){
             if (err) throw err;
             else {
